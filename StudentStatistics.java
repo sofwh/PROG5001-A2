@@ -10,19 +10,23 @@ class Student {
     double a3Mark;
     double totalMark;
 
-    public Student(String lastName, String firstName, String studentID, double a1Mark, double a2Mark, double a3Mark) {
+    public Student(String lastName, String firstName, 
+    String studentID, double a1Mark, double a2Mark, double a3Mark) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.studentID = studentID;
         this.a1Mark = a1Mark;
         this.a2Mark = a2Mark;
         this.a3Mark = a3Mark;
-       
+        calculateTotalMark();
+
     }
 
-    
-}
+    private void calculateTotalMark() {
+        totalMark = a1Mark + a2Mark + a3Mark;
+    }
 
+}
 public class StudentStatistics {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -72,6 +76,23 @@ public class StudentStatistics {
             e.printStackTrace();
             return null;
         }
+
     }
+
+    private static void calculateTotalMarksAndPrint(Student[] students) {
+        System.out.println("List of Students with Assessment Marks and Total Marks:");
+        for (Student student : students) {
+            if (student != null) { // Check if the student is not null
+                double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
+                System.out.println("Name: " + student.firstName + " " + student.lastName +
+                    ", Student ID: " + student.studentID +
+                    ", A1 Mark: " + student.a1Mark +
+                    ", A2 Mark: " + student.a2Mark +
+                    ", A3 Mark: " + student.a3Mark +
+                    ", Total Mark: " + totalMark);
+            }
+        }
+    }
+
 }
 
