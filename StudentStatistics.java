@@ -60,12 +60,12 @@ public class StudentStatistics {
                     String lastName = parts[0].trim();
                     String firstName = parts[1].trim();
                     String studentID = parts[2].trim();
-                    double a1Mark = Double.parseDouble(parts[3]);
-                    double a2Mark = Double.parseDouble(parts[4]);
+                    double a1Mark = parseDouble(parts[3]);
+                    double a2Mark = parseDouble(parts[4]);
                     double a3Mark = 0.0; // Default value if A3 is missing
 
                     if (parts.length >= 6) { // Check if A3 is present
-                        a3Mark = Double.parseDouble(parts[5]);
+                        a3Mark = parseDouble(parts[5]);
                     }
 
                     students[lineNumber - 2] = new Student(lastName, firstName, studentID, a1Mark, a2Mark, a3Mark);
@@ -77,6 +77,17 @@ public class StudentStatistics {
             return null;
         }
 
+    }
+    
+    private static double parseDouble(String value) {
+        try {
+            if (!value.isEmpty() && value.matches("[0-9.]+")) {
+                return Double.parseDouble(value);
+            }
+        } catch (NumberFormatException e) {
+            // Handle the exception (e.g., log or display an error message)
+        }
+        return 0.0; // Default value if parsing fails or value is empty
     }
 
     private static void calculateTotalMarksAndPrint(Student[] students) {
@@ -90,6 +101,20 @@ public class StudentStatistics {
                     ", A2 Mark: " + student.a2Mark +
                     ", A3 Mark: " + student.a3Mark +
                     ", Total Mark: " + totalMark);
+            }
+        }
+    }
+    
+    private static void printStudentsBelowThreshold(Student[] students, double threshold) {
+        System.out.println("Students with total marks below " + threshold + ":");
+        for (Student student : students) {
+            if (student != null) { // Check if the student is not null
+                double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
+                if (totalMark < threshold) {
+                    System.out.println("Name: " + student.firstName + " " + student.lastName +
+                        ", Student ID: " + student.studentID +
+                        ", Total Mark: " + totalMark);
+                }
             }
         }
     }
