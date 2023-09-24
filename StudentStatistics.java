@@ -118,6 +118,24 @@ public class StudentStatistics {
             }
         }
     }
+    
+    private static void bubbleSortStudents(Student[] students, boolean ascending) {
+        int n = students.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (students[j] != null && students[j + 1] != null) {
+                    double mark1 = students[j].totalMark;
+                    double mark2 = students[j + 1].totalMark;
+
+                    if ((ascending && mark1 > mark2) || (!ascending && mark1 < mark2)) {
+                        Student temp = students[j];
+                        students[j] = students[j + 1];
+                        students[j + 1] = temp;
+                    }
+                }
+            }
+        }
+    }
 
 }
 
