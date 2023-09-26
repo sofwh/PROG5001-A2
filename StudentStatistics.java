@@ -33,31 +33,36 @@ class Student {
 public class StudentStatistics {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the name of the input file: ");
+        System.out.println("*********************************************");
+        System.out.println("     Welcome to the Student Statistics       ");
+        System.out.println("*********************************************");
+        System.out.print("Enter the name of the  file: ");
         String fileName = scanner.nextLine();
 
         ArrayList<Student> students = readStudentDataFromFile(fileName);
 
         if (students != null) {
             while (true) {
-                System.out.println("\nMenu:");
+                System.out.println("\n*********************************************");
+                System.out.println("                   Menu                      ");
+                System.out.println("*********************************************");
                 System.out.println("1. Calculate and Print Total Marks");
-                System.out.println("2. Print Students Below a Threshold");
+                System.out.println("2. Print Students Below a Threshold Marks");
                 System.out.println("3. Print Top 5 Students with Highest Total Marks");
                 System.out.println("4. Print Top 5 Students with Lowest Total Marks");
                 System.out.println("5. Exit");
-                System.out.print("Select an option (1/2/3/4/5): ");
+                System.out.print("Select an option (1 | 2 | 3 | 4 | 5): ");
 
                 int choice = scanner.nextInt();
 
                 switch (choice) {
                     case 1:
-                        calculateTotalMarksAndPrint(students);
+                        calculateTotalMarks(students);
                         break;
                     case 2:
-                        System.out.print("Enter the threshold: ");
+                        System.out.print("Enter the threshold Marks: ");
                         double threshold = scanner.nextDouble();
-                        printStudentsBelowThreshold(students, threshold);
+                        studentsBelowThreshold(students, threshold);
                         break;
                     case 3:
                         printTopNStudents(students, 5, false);
@@ -70,11 +75,11 @@ public class StudentStatistics {
                         scanner.close();
                         System.exit(0);
                     default:
-                        System.out.println("Invalid option. Please select again.");
+                         System.out.println("Error: Invalid option. Please select a valid option (1 | 2 | 3 | 4 | 5).");
                 }
             }
         } else {
-            System.out.println("Error reading student data from the file.");
+            System.out.println("Error: Unable to read student data from the file. Please check the file name and format.");
         }
     }
 
@@ -114,6 +119,7 @@ public class StudentStatistics {
             return students;
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error: Unable to read the file. Please check if the file exists and is accessible.");
             return null;
         }
     }
@@ -138,7 +144,7 @@ public class StudentStatistics {
         return 0.0; // Default value if parsing fails or value is empty
     }
 
-    private static void calculateTotalMarksAndPrint(ArrayList<Student> students) {
+    private static void calculateTotalMarks(ArrayList<Student> students) {
         System.out.println("List of Students with Assessment Marks and Total Marks:");
         for (Student student : students) {
             double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
@@ -151,7 +157,7 @@ public class StudentStatistics {
         }
     }
 
-    private static void printStudentsBelowThreshold(ArrayList<Student> students, double threshold) {
+    private static void studentsBelowThreshold(ArrayList<Student> students, double threshold) {
         System.out.println("Students with total marks below " + threshold + ":");
         for (Student student : students) {
             double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
@@ -174,7 +180,10 @@ public class StudentStatistics {
                 boolean shouldSwap = ascending ? mark1 > mark2 : mark1 < mark2;
 
                 if (shouldSwap) {
-                    Collections.swap(students, j, j + 1);
+
+                    Student temp = students.get(j);
+                    students.set(j, students.get(j + 1));
+                    students.set(j + 1, temp);
                 }
             }
         }
