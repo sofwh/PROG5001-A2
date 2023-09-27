@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
 
 class Student {
@@ -75,7 +73,7 @@ public class StudentStatistics {
                         scanner.close();
                         System.exit(0);
                     default:
-                         System.out.println("Error: Invalid option. Please select a valid option (1 | 2 | 3 | 4 | 5).");
+                        System.out.println("Error: Invalid option. Please select a valid option (1 | 2 | 3 | 4 | 5).");
                 }
             }
         } else {
@@ -93,7 +91,7 @@ public class StudentStatistics {
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
                 if (lineNumber == 1) {
-                    // Skip the first line (unit name)
+                    // Skipping unit name which is in first line
                     continue;
                 }
 
@@ -139,7 +137,7 @@ public class StudentStatistics {
                 return Double.parseDouble(value);
             }
         } catch (NumberFormatException e) {
-            // Handle the exception (e.g., log or display an error message)
+            System.out.println("Error: Invalid number format . Please check the data format.");
         }
         return 0.0; // Default value if parsing fails or value is empty
     }
