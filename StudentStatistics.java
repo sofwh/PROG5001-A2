@@ -156,16 +156,28 @@ public class StudentStatistics {
     }
 
     private static void studentsBelowThreshold(ArrayList<Student> students, double threshold) {
-        System.out.println("Students with total marks below " + threshold + ":");
-        for (Student student : students) {
-            double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
-            if (totalMark < threshold) {
-                System.out.println("Name: " + student.firstName + " " + student.lastName +
-                    ", Student ID: " + student.studentID +
-                    ", Total Mark: " + totalMark);
-            }
+    System.out.println("Students with total marks below " + threshold + ":");
+    ArrayList<Student> studentsBelowThreshold = new ArrayList<>();
+
+    for (Student student : students) {
+        double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
+        if (totalMark < threshold) {
+            studentsBelowThreshold.add(student);
         }
     }
+
+    if (studentsBelowThreshold.isEmpty()) {
+        System.out.println("No students found below the threshold.");
+    } else {
+        for (Student student : studentsBelowThreshold) {
+            double totalMark = student.a1Mark + student.a2Mark + student.a3Mark;
+            System.out.println("Name: " + student.firstName + " " + student.lastName +
+                ", Student ID: " + student.studentID +
+                ", Total Mark: " + totalMark);
+        }
+    }
+}
+
 
     private static void bubbleSortStudents(ArrayList<Student> students, boolean ascending) {
         int n = students.size();
