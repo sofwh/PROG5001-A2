@@ -59,8 +59,10 @@ public class StudentStatistics {
                         break;
                     case 2:
                         System.out.print("Enter the threshold Marks: ");
-                        double threshold = scanner.nextDouble();
-                        studentsBelowThreshold(students, threshold);
+                        double threshold = getThresholdFromUser(scanner);
+                        if (threshold >= 0) {
+                            studentsBelowThreshold(students, threshold);
+                        }
                         break;
                     case 3:
                         printTopNStudents(students, 5, false);
@@ -79,6 +81,20 @@ public class StudentStatistics {
         } else {
             System.out.println("Error: Unable to read student data from the file. Please check the file name and format.");
         }
+    }
+
+    private static double getThresholdFromUser(Scanner scanner) {
+        double threshold = -1; // Default value to indicate an error
+        System.out.print("Enter the threshold Marks: ");
+        String input = scanner.next();
+
+        try {
+            threshold = Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid input. Please enter a numeric value for the threshold.");
+        }
+
+        return threshold;
     }
 
     private static ArrayList<Student> readStudentDataFromFile(String fileName) {
@@ -113,6 +129,9 @@ public class StudentStatistics {
                         students.add(new Student(lastName, firstName, studentID, a1Mark, a2Mark, a3Mark));
                     }
                 }
+            }
+            if (students.isEmpty()) {
+                System.out.println("Error: No students found in the file.");
             }
             return students;
         } catch (IOException e) {
