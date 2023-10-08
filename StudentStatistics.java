@@ -78,18 +78,19 @@ public class StudentStatistics {
                         System.out.println("Error: Invalid option. Please select a valid option (1 | 2 | 3 | 4 | 5).");
                 }
             }
-        } else {
-            System.out.println("Error: Unable to read student data from the file. Please check the file name and format.");
         }
     }
 
     private static double getThresholdFromUser(Scanner scanner) {
         double threshold = -1; // Default value to indicate an error
-        System.out.print("Enter the threshold Marks: ");
         String input = scanner.next();
 
         try {
             threshold = Double.parseDouble(input);
+            if (threshold < 0) {
+                System.out.println("Error: Threshold cannot be negative.");
+                threshold = -1; // Reset to the default error value
+            }
         } catch (NumberFormatException e) {
             System.out.println("Error: Invalid input. Please enter a numeric value for the threshold.");
         }
@@ -131,7 +132,7 @@ public class StudentStatistics {
                 }
             }
             if (students.isEmpty()) {
-                System.out.println("Error: No students found in the file.");
+                System.out.println("Error: The file is empty. There are no students to process.");
             }
             return students;
         } catch (IOException e) {
